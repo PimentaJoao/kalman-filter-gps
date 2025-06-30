@@ -105,6 +105,38 @@ def plot_kalman_filter_1D_position_acc(t, y_groundtruth_acc, y_kalman_acc):
     plt.legend()
     plt.show()
 
+def extract_lats_lons(file_name: str) -> tuple[list, list]:
+    lat_vals = []
+    lon_vals = []
+
+    with open(file_name) as file:
+        reader = csv.DictReader(file, delimiter="\t")
+        for row in reader:
+            lat_vals.insert(0, float(row["latitude"]))
+            lon_vals.insert(0, float(row["longitude"]))
+    
+    return lat_vals, lon_vals
+
+def coords_to_relative_cartesian(lat_vals, lon_vals) -> tuple[list, list]:
+    first_lat, first_lon = lat_vals[0], lon_vals[0]
+
+    utm_crs = CRS.from_proj4(f"+proj=utm +zone={(int((first_lon + 180) / 6) + 1)} +south +ellps=WGS84 +units=m +no_defs")
+
+    transformer = Transformer.from_crs("EPSG:4326", f"EPSG:{utm_crs.to_epsg()}", always_xy=True)
+
+    x0, y0 = transformer.transform(first_lon, first_lat)
+    x_vals = []
+    y_vals = []
+
+    # Converter todos os pontos para (x, y) relativos à origem.
+    for i in range(len(lat_vals)):
+        x, y = transformer.transform(lon_vals[i], lat_vals[i])
+
+        x_vals.append(x - x0)
+        y_vals.append(y - y0)
+    
+    return x_vals, y_vals
+
 def uniformize_curve(x_vals, y_vals, spacing):
     x_vals = np.array(x_vals)
     y_vals = np.array(y_vals)
