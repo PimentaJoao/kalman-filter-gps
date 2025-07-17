@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
 from pyproj import Transformer, CRS
-from datetime import datetime
 from scipy.interpolate import interp1d
 
 # create_array creates values for plotting graphs.

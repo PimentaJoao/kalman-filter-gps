@@ -69,7 +69,7 @@ Q = np.array([
     [0, 1]
 ]) * q
 
-# matriz "máscara", que mapeia o formato (4x1) estado para o formato medição (2x1)
+# matriz de observação, que mapeia o formato (6x1) do estado para o formato medição (2x1)
 C = np.array([
     [1, 0, 0, 0, 0, 0],
     [0, 1, 0, 0, 0, 0],

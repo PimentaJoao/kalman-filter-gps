@@ -47,7 +47,7 @@ Sigma = np.array([
     [0, 0, 1],
 ])
 
-# matriz "máscara", que mapeia o formato (3x1) do estado para o formato medição (1x1)
+# matriz de observação, que mapeia o formato (3x1) do estado para o formato medição (1x1)
 C = np.array([
     [1, 0, 0]
 ])
