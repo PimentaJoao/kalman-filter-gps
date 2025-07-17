@@ -13,6 +13,9 @@ n = len(x_vals_gt_uni) # Número de amostras
 # Eixo x do gráfico
 t_vals = np.linspace(0, 1, n)
 
+# Fixa uma seed, para manter a rota ruidosa igual entre diferentes execuções do script, facilitando melhorias.
+np.random.seed(42) 
+
 noise_lvl = 5
 
 x_noisy = x_vals_gt_uni + np.random.randn(n) * noise_lvl
@@ -60,7 +63,7 @@ R = np.array([
 ]) * r
 
 # erro da medição
-q = noise_lvl
+q = noise_lvl**2
 Q = np.array([
     [1, 0],
     [0, 1]
@@ -79,7 +82,7 @@ Sigmas = []
 # Loop principal do filtro de Kalman
 for i in range(n):
     Sigmas.append(Sigma)
-
+    
     # Propagação
     X = A @ X
     Sigma = A @ Sigma @ A.T + R
@@ -102,8 +105,8 @@ utils.test_errors(x_vals_gt_uni, y_vals_gt_uni, x_noisy, y_noisy, x_kalman, y_ka
 
 # ** PLOT ** 
 plt.plot(x_vals_gt_uni, y_vals_gt_uni, linewidth=1, color='k', label='groundtruth')
-plt.plot(x_kalman, y_kalman, linewidth=2, color='limegreen', label='estimativa do filtro de Kalman')
-plt.title("Trajetória estimada pelo filtro de Kalman")
+plt.plot(x_kalman, y_kalman, linewidth=2.5, color='limegreen', label='estimativa do filtro de Kalman')
+plt.title("Trajetória estimada pelo filtro de Kalman modelo MRUV")
 plt.xlabel("x (m)")
 plt.ylabel("y (m)")
 plt.axis("equal")
@@ -146,7 +149,7 @@ plt.show()
 plt.plot(t_vals * len(t_vals), x_vals_gt_uni, linewidth=3, color='k', label='groundtruth')
 plt.plot(t_vals * len(t_vals), x_kalman, linewidth=2, color='limegreen', label='estimativa do filtro de Kalman')
 plt.plot(t_vals * len(t_vals), x_noisy, marker='.', linestyle='none', color='red', markersize=1, label='medição')
-plt.title("Análise do erro no eixo x")
+plt.title("Análise do erro no eixo x - modelo MRUV")
 plt.xlabel("tempo (s)")
 plt.ylabel("x (m)")
 plt.grid(True)
@@ -157,7 +160,7 @@ plt.show()
 plt.plot(t_vals * len(t_vals), y_vals_gt_uni, linewidth=3, color='k', label='groundtruth')
 plt.plot(t_vals * len(t_vals), y_kalman, linewidth=2, color='limegreen', label='estimativa do filtro de Kalman')
 plt.plot(t_vals * len(t_vals), y_noisy, marker='.', linestyle='none', color='red', markersize=1, label='medição')
-plt.title("Análise do erro no eixo y")
+plt.title("Análise do erro no eixo y - modelo MRUV")
 plt.xlabel("tempo (s)")
 plt.ylabel("y (m)")
 plt.grid(True)

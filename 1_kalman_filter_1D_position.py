@@ -7,7 +7,7 @@ n = 150 # Número de amostras
 groundtruth_initial_pos = 2  # Posição inicial real
 groundtruth_initial_vel = -5 # Velocidade inicial real
 groundtruth_acc = 0.8        # Aceleração (constante) real
-noise_lvl = 10                # Ruído de +- 5 metros
+noise_lvl = 5                # Ruído de +- 5 metros
 
 # Eixo x do gráfico
 t = np.linspace(0, (n - 1) * dt, n)
@@ -53,7 +53,7 @@ C = np.array([
 ])
 
 # matriz de covariância "erro no modelo"
-r = 0
+r = 0.00001
 R = np.array([
     [1, 0, 0],
     [0, 1, 0],
@@ -61,7 +61,7 @@ R = np.array([
 ]) * r
 
 # matriz de covariância "erro da medição"
-q = noise_lvl
+q = noise_lvl**2 # (desvio padrão² = variância)
 Q = np.array([
     [1]
 ]) * q
