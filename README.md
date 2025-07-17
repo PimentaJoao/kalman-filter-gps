@@ -46,7 +46,7 @@ filtro de Kalman.
 
 ### Execução
 
-## Jupyter Notebook
+#### Jupyter Notebook
 
 Para acessar o Jupyter Notebook criado para os estudos, utilize o comando:
 
@@ -54,9 +54,9 @@ Para acessar o Jupyter Notebook criado para os estudos, utilize o comando:
     jupyter lab
 ```
 
-Em seguida, navegue até o arquivo `0_kalman_notebook.ipynb`.
+Em seguida, navegue até o arquivo `kalman.ipynb`.
 
-## Scripts "crus"
+#### Scripts "crus"
 
 Para executar os `scripts` individualmente, rode:
 
